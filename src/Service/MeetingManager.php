@@ -70,7 +70,7 @@ class MeetingManager {
 
     /**
      * @param Meeting $meeting
-     * @param User $member
+     * @param User $user
      */
     public function registerUser(Meeting $meeting, User $user) {
         $meeting->addUser($user);

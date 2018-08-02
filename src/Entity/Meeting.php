@@ -128,11 +128,17 @@ class Meeting {
     }
 
     /**
-     * @param User $user
+     * @param User $new_user
+     * @return bool
      */
-    public function addUser(User $user) {
-        // TODO : Control existing members
-        $this->users[] = $user;
+    public function addUser(User $new_user) {
+        foreach ($this->users as $user) {
+            if ($user->getId() == $new_user->getId()) {
+                return false;
+            }
+        }
+        $this->users[] = $new_user;
+        return true;
     }
 
     /**

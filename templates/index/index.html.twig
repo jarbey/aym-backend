@@ -3,8 +3,18 @@
 {% block title %}Hello !{% endblock %}
 
 {% block body %}
-    <div class="row" id="ws-content-receiver">
-        Connecting...
+    <div class="row">
+        <div class="col">
+            <div class="row" id="ws-content-receiver">
+                Connecting...
+            </div>
+            <div class="row" id="ws-content-receiver">
+                <input type="text" id="send_text" style="width: 1200px" /><button id="send">Send</button>
+            </div>
+            <div class="row" id="ws-content-receiver">
+                <textarea id="receive" style="width: 100%; height: 400px;"></textarea>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
@@ -23,8 +33,10 @@
             try {
                 var server_message = JSON.parse(event.data);
                 console.log('WsMessage', server_message);
+                $('#receive').append((new Date()).toLocaleTimeString() + " : " + event.data + "\n");
             } catch (error) {
                 console.log(error);
+                $('#receive').append(error);
             }
         };
         ws.onclose = function () {
@@ -34,6 +46,10 @@
         ws.onerror = function () {
         };
     }
+    $('#send').click(function() {
+        console.log($('#send_text').val());
+        ws.send($('#send_text').val());
+    });
 
     (function () {
         connectWebSocket();

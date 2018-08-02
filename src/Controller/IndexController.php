@@ -13,7 +13,7 @@ class IndexController extends Controller
     public function index()
     {
         return $this->render('index/index.html.twig', [
-            'ws_url' => 'aym.arbey.fr',
+            'ws_url' => 'aym.arbey.fr/ws',
         ]);
     }
 }
