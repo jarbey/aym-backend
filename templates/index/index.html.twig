@@ -14,7 +14,7 @@
 
     function connectWebSocket() {
         console.log('Connect to {{ ws_url }}');
-        ws = new WebSocket('ws://{{ ws_url }}');
+        ws = new WebSocket('wss://{{ ws_url }}');
         var _receiver = document.getElementById('ws-content-receiver');
         ws.onopen = function () {
             _receiver.innerHTML = 'Connected !';
