@@ -40,7 +40,7 @@ class WebSocketServerCommand extends AbstractCommand {
         $this->getLogger()->info('Start WebSocket server');
         $server = IoServer::factory(
             new HttpServer(new WsServer($this->web_socket_component)),
-            8082,
+            8182,
             '0.0.0.0'
         );
         $server->run();
