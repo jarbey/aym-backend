@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello !{% endblock %}
+
+{% block body %}
+    <div class="row" id="ws-content-receiver">
+        Connecting...
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    var ws = null;
+
+    function connectWebSocket() {
+        console.log('Connect to {{ ws_url }}');
+        ws = new WebSocket('ws://{{ ws_url }}');
+        var _receiver = document.getElementById('ws-content-receiver');
+        ws.onopen = function () {
+            _receiver.innerHTML = 'Connected !';
+        };
+        ws.onmessage = function (event) {
+            try {
+                var server_message = JSON.parse(event.data);
+                console.log('WsMessage', server_message);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        ws.onclose = function () {
+            console.log('OnClose');
+            setTimeout(connectWebSocket, 2000);
+        };
+        ws.onerror = function () {
+        };
+    }
+
+    (function () {
+        connectWebSocket();
+    })();
+</script>
+{% endblock %}
