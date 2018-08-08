@@ -46,7 +46,7 @@ class Meeting {
      *
      * @Groups({"MeetingUser"})
      */
-    private $users;
+    private $users = [];
 
     /**
      * @var Slide[]
