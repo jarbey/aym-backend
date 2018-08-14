@@ -9,11 +9,18 @@
 namespace App\Entity;
 
 use JMS\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ */
 class User
 {
     /**
      * @var string
+     *
+     * @ORM\Id
+     * @ORM\Column(type="text")
      *
      * @Groups({"MeetingUser", "User"})
      */
@@ -22,12 +29,16 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(type="text")
+     *
      * @Groups({"MeetingUser", "User"})
      */
     private $type;
 
     /**
      * @var string
+     *
+     * @ORM\Column(type="text")
      *
      * @Groups({"MeetingUser", "User"})
      */
@@ -36,9 +47,18 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(type="text")
+     *
      * @Groups({"MeetingUser", "User"})
      */
     private $avatar;
+
+    /**
+     * @var Meeting[]
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Meeting", inversedBy="users")
+     */
+    private $meetings;
 
     /**
      * @return string

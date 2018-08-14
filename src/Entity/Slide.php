@@ -9,11 +9,18 @@
 namespace App\Entity;
 
 use JMS\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\SlideRepository")
+ */
 class Slide
 {
     /**
      * @var string
+     *
+     * @ORM\Id
+     * @ORM\Column(type="text")
      *
      * @Groups({"MeetingSlide", "Slide"})
      */
@@ -22,9 +29,18 @@ class Slide
     /**
      * @var string
      *
+     * @ORM\Column(type="text")
+     *
      * @Groups({"MeetingSlide", "Slide"})
      */
     private $title;
+
+    /**
+     * @var Meeting[]
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Meeting", inversedBy="slides")
+     */
+    private $meetings;
 
     /**
      * Slide constructor.
@@ -73,5 +89,22 @@ class Slide
         return $this;
     }
 
+    /**
+     * @return Meeting[]
+     */
+    public function getMeetings()
+    {
+        return $this->meetings;
+    }
+
+    /**
+     * @param Meeting[] $meetings
+     * @return Slide
+     */
+    public function setMeetings(array $meetings)
+    {
+        $this->meetings = $meetings;
+        return $this;
+    }
 
 }

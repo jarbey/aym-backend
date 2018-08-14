@@ -10,11 +10,18 @@ namespace App\Entity;
 
 use Doctrine\ORM\EntityNotFoundException;
 use JMS\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\MeetingRepository")
+ */
 class Meeting {
 
     /**
      * @var string
+     *
+     * @ORM\Id
+     * @ORM\Column(type="text")
      *
      * @Groups({"Meeting"})
      */
@@ -23,12 +30,17 @@ class Meeting {
     /**
      * @var string
      *
+     * @ORM\Column(type="text")
+     *
      * @Groups({"MeetingInfo"})
      */
-    private $titre;
+    private $title;
 
     /**
      * @var Slide
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Slide")
+     * @ORM\JoinColumn(name="current_slide_id", referencedColumnName="id")
      *
      * @Groups({"MeetingInfo"})
      */
@@ -37,6 +49,9 @@ class Meeting {
     /**
      * @var Server
      *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Server")
+     * @ORM\JoinColumn(name="server_id", referencedColumnName="id")
+     *
      * @Groups({"MeetingServer"})
      */
     private $server;
@@ -44,12 +59,18 @@ class Meeting {
     /**
      * @var User[]
      *
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="meetings")
+     * @ORM\JoinTable(name="meetings_users")
+     *
      * @Groups({"MeetingUser"})
      */
     private $users = [];
 
     /**
      * @var Slide[]
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Slide", inversedBy="meetings")
+     * @ORM\JoinTable(name="meetings_slides")
      *
      * @Groups({"MeetingSlide"})
      */
@@ -76,18 +97,18 @@ class Meeting {
     /**
      * @return string
      */
-    public function getTitre()
+    public function getTitle()
     {
-        return $this->titre;
+        return $this->title;
     }
 
     /**
-     * @param string $titre
+     * @param string $title
      * @return Meeting
      */
-    public function setTitre(string $titre)
+    public function setTitle(string $title)
     {
-        $this->titre = $titre;
+        $this->title = $title;
         return $this;
     }
 

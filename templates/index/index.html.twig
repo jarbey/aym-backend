@@ -14,6 +14,15 @@
             <div class="row" id="ws-content-receiver">
                 <textarea id="receive" style="width: 100%; height: 400px;"></textarea>
             </div>
+            <div class="row">
+                Dernières présentations
+            </div>
+            <div class="row">
+                {% for meeting in meetings %}
+                    <div class="col"><a href="://meeting.aym.arbey.fr/?mid={{ meeting.id }}&type=trainer">{{ meeting.title }} - Trainer</a></div>
+                    <div class="col"><a href="://meeting.aym.arbey.fr/?mid={{ meeting.id }}&type=learner">{{ meeting.title }} - Learner</a></div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -9,12 +9,27 @@
 namespace App\Entity;
 
 use JMS\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\ServerRepository")
+ */
 class Server
 {
     /**
      * @var string
+     *
+     * @ORM\Id
+     * @ORM\Column(type="text")
+     *
+     * @Groups({"MeetingServer", "Server"})
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
      *
      * @Groups({"MeetingServer", "Server"})
      */
@@ -23,19 +38,29 @@ class Server
     /**
      * @var string
      *
+     * @ORM\Column(type="text")
+     *
      * @Groups({"MeetingServer", "Server"})
      */
     private $thumbnail_uri;
 
+
     /**
-     * Server constructor.
-     * @param string $slide_uri
-     * @param string $thumbnail_uri
+     * @return string
      */
-    public function __construct(string $slide_uri, string $thumbnail_uri)
+    public function getId()
     {
-        $this->slide_uri = $slide_uri;
-        $this->thumbnail_uri = $thumbnail_uri;
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     * @return Server
+     */
+    public function setId(string $id)
+    {
+        $this->id = $id;
+        return $this;
     }
 
     /**

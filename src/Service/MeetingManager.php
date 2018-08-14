@@ -12,6 +12,7 @@ use App\Entity\Meeting;
 use App\Entity\User;
 use App\Entity\Server;
 use App\Entity\Slide;
+use App\Repository\MeetingRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -19,34 +20,20 @@ class MeetingManager {
     /** @var LoggerInterface */
     private $logger;
 
-    /** @var Meeting */
-    private $meeting;
+    /** @var Meeting[] */
+    private $meetings = [];
+
+    /** @vaar MeetingRepository */
+    private $meeting_repository;
 
     /**
-     * AbstractManager constructor.
+     * MeetingManager constructor.
      * @param LoggerInterface $logger
+     * @param MeetingRepository $meeting_repository
      */
-    public function __construct(LoggerInterface $logger) {
+    public function __construct(LoggerInterface $logger, MeetingRepository $meeting_repository) {
         $this->logger = $logger;
-
-        $this->meeting = new Meeting();
-        $this->meeting->setId('1AF');
-        $this->meeting->setTitre('Best presentation ever !');
-
-        $this->meeting->setServer(new Server('https://dummyimage.com/600x400/000/fff.jpg&text={slide}', 'https://dummyimage.com/600x400/000/fff.jpg&text={slide}'));
-
-        $this->meeting->setSlides([
-            new Slide('1', 'First page'),
-            new Slide('2', 'Page 2'),
-            new Slide('3', 'Page 3'),
-            new Slide('4', 'Page 4'),
-            new Slide('5', 'Page 5'),
-            new Slide('6', 'Page 6'),
-            new Slide('7', 'Page 7'),
-            new Slide('8', 'Page 8'),
-            new Slide('9', 'Page 9'),
-            new Slide('10', 'Last page'),
-        ]);
+        $this->meeting_repository = $meeting_repository;
     }
 
     /**
@@ -61,8 +48,16 @@ class MeetingManager {
      * @return Meeting
      */
     public function getMeeting($id) {
-        if ($this->meeting->getId() == $id) {
-            return $this->meeting;
+        if (array_key_exists($id, $this->meetings)) {
+            // Cache fetch
+            return $this->meetings[$id];
+        } else {
+            // DB load
+            $meeting = $this->meeting_repository->find($id);
+            if ($meeting) {
+                $this->meetings[$id] = $meeting;
+                return $meeting;
+            }
         }
 
         throw new ResourceNotFoundException('Meeting ' . $id . ' does not exists !');
