@@ -108,7 +108,7 @@ class MeetingManager {
      * @param null $title
      * @throws \Exception
      */
-    public function createMeetingFromPPT(File $ppt, $title = null) {
+    public function createMeetingFromPPT(File $ppt, $title = '') {
         if (!$ppt || !$ppt->isFile()) {
             throw new \Exception('ppt file is incorrect !');
         }

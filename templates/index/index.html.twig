@@ -20,11 +20,22 @@
                 {"meeting":{"id":"XXXXXXXXX","current_slide":{"id":"YYYYYYYYY"}},"event":"REQUEST_SLIDE"}
             </div>
 
-
+            <div class="row"><strong>&nbsp;</strong></div>
 
             <div class="row">
-                <strong>Dernières présentations</strong>
+                {{ form_start(form) }}
+
+                {{ form_row(form.ppt) }}
+
+                <button type="submit">Send !</button>
+                {{ form_end(form) }}
             </div>
+
+            <div class="row"><strong>&nbsp;</strong></div>
+
+
+            <div class="row"><strong>DERNIERES PRESENTATIONS</strong></div>
+
             {% for meeting in meetings %}
             <div class="row">
                 <div class="col">{{ meeting.id }} : <a href="//meeting.aym.arbey.fr/?mid={{ meeting.id }}&type=trainer">{{ meeting.title }} (TRAINER)</a> - = - <a href="//meeting.aym.arbey.fr/?mid={{ meeting.id }}&type=learner">{{ meeting.title }} (LEARNER)</a></div>

@@ -28,6 +28,7 @@ class IndexController extends AbstractController
         $meetings = $meeting_repository->findBy([], array('id' => 'DESC'), 20);
 
         return $this->render('index/index.html.twig', [
+            'form' => $form->createView(),
             'ws_url' => 'aym.arbey.fr/ws',
             'meetings' => $meetings
         ]);
