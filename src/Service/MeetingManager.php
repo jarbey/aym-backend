@@ -113,8 +113,6 @@ class MeetingManager {
             throw new \Exception('ppt file is incorrect !');
         }
 
-
-
         $meeting = new Meeting();
         $meeting->setId(uniqid());
         $meeting->setTitle($title);
