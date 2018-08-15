@@ -15,7 +15,15 @@
                 <textarea id="receive" style="width: 100%; height: 400px;"></textarea>
             </div>
             <div class="row">
-                Dernières présentations
+                <strong>COMMANDES</strong><br />
+                {"meeting":{"id":"XXXXXXXXX"},"event":"REQUEST_JOIN","user":{"id":"54F12","type":"learner","name":"Psio","avatar":"https://....."}}<br />
+                {"meeting":{"id":"XXXXXXXXX","current_slide":{"id":"YYYYYYYYY"}},"event":"REQUEST_SLIDE"}
+            </div>
+
+
+
+            <div class="row">
+                <strong>Dernières présentations</strong>
             </div>
             {% for meeting in meetings %}
             <div class="row">
@@ -46,6 +54,9 @@
                 console.log(error);
                 $('#receive').append(error);
             }
+
+            var textarea = document.getElementById('receive');
+            textarea.scrollTop = textarea.scrollHeight;
         };
         ws.onclose = function () {
             console.log('OnClose');
