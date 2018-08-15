@@ -35,6 +35,6 @@ class PPTConverterCommand extends AbstractCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $this->meeting_manager->createMeetingFromPPT(new File(__DIR__ . '../../bin/test.ppt'), 'Test JAY');
+        $this->meeting_manager->createMeetingFromPPT(new File(__DIR__ . '/../../bin/test.ppt'), 'Test JAY');
     }
 }

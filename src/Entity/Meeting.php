@@ -186,6 +186,24 @@ class Meeting {
     }
 
     /**
+     * @param Slide $slide
+     * @return $this
+     */
+    public function addSlide(Slide $slide) {
+        if (!$this->slides) {
+            $this->slides = [];
+        }
+
+        $this->slides[] = $slide;
+
+        if ($this->current_slide == null) {
+            $this->setCurrentSlide($slide);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param $id
      * @return Slide
      * @throws EntityNotFoundException
