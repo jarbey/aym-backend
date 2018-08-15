@@ -12,7 +12,8 @@ use App\Entity\Meeting;
 use App\Entity\Slide;
 use App\Entity\User;
 use App\Repository\MeetingRepository;
-use Doctrine\ORM\EntityManager;
+use App\Repository\ServerRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -33,21 +34,26 @@ class MeetingManager {
     /** @var Meeting[] */
     private $meetings = [];
 
-    /** @vaar MeetingRepository */
+    /** @var ServerRepository */
+    private $server_repository;
+
+    /** @var MeetingRepository */
     private $meeting_repository;
 
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $entity_manager;
 
     /**
      * MeetingManager constructor.
      * @param LoggerInterface $logger
      * @param MeetingRepository $meeting_repository
-     * @param EntityManager $em
+     * @param ServerRepository $server_repository
+     * @param EntityManagerInterface $em
      */
-    public function __construct(LoggerInterface $logger, MeetingRepository $meeting_repository, EntityManager $em) {
+    public function __construct(LoggerInterface $logger, MeetingRepository $meeting_repository, ServerRepository $server_repository, EntityManagerInterface $em) {
         $this->logger = $logger;
         $this->meeting_repository = $meeting_repository;
+        $this->server_repository = $server_repository;
         $this->entity_manager = $em;
         $this->process = new Process('');
 
@@ -90,6 +96,14 @@ class MeetingManager {
     }
 
     /**
+     * @return \App\Entity\Server
+     */
+    private function getServer() {
+        $servers = $this->server_repository->findAll();
+        return $servers[0];
+    }
+
+    /**
      * @param File $ppt
      * @param null $title
      * @throws \Exception
@@ -99,9 +113,12 @@ class MeetingManager {
             throw new \Exception('ppt file is incorrect !');
         }
 
+
+
         $meeting = new Meeting();
         $meeting->setId(uniqid());
         $meeting->setTitle($title);
+        $meeting->setServer($this->getServer());
 
         $tmp_file = __DIR__ . '/../../var/' . $meeting->getId() . '.zip';
 
@@ -137,6 +154,8 @@ class MeetingManager {
 
         $this->entity_manager->persist($meeting);
         $this->entity_manager->flush();
+
+        unlink($tmp_file);
     }
 
 }

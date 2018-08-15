@@ -13,8 +13,8 @@ class ServerFixture extends Fixture implements OrderedFixtureInterface
     {
         $server = new Server();
         $server->setId(uniqid());
-        $server->setSlideUri('https://dummyimage.com/600x400/000/fff.jpg&text={slide}');
-        $server->setThumbnailUri('https://dummyimage.com/600x400/000/fff.jpg&text={slide}');
+        $server->setSlideUri('https://aym.arbey.fr/slides/{meeting}/{slide}.jpg');
+        $server->setThumbnailUri('https://aym.arbey.fr/slides/{meeting}/{slide}.jpg');
         $manager->persist($server);
 
         $manager->flush();

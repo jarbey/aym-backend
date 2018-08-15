@@ -13,7 +13,7 @@ class IndexController extends Controller
      */
     public function index(MeetingRepository $meeting_repository)
     {
-        $meetings = $meeting_repository->findBy([], null, 20);
+        $meetings = $meeting_repository->findBy([], array('id' => 'DESC'), 20);
 
         return $this->render('index/index.html.twig', [
             'ws_url' => 'aym.arbey.fr/ws',
