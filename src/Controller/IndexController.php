@@ -27,10 +27,17 @@ class IndexController extends AbstractController
 
         $meetings = $meeting_repository->findBy([], array('id' => 'DESC'), 20);
 
+		$file = file(__DIR__ . '/../../var/log/dev.websocketserver.log');
+		$logs = [];
+		for ($i = max(0, count($file) - 100); $i < count($file); $i++) {
+			$logs[] = $file[$i];
+		}
+
         return $this->render('index/index.html.twig', [
             'form' => $form->createView(),
             'ws_url' => 'aym.arbey.fr/ws',
-            'meetings' => $meetings
+            'meetings' => $meetings,
+			'log' => join("\n", $logs)
         ]);
     }
 	/**

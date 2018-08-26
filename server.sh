@@ -5,4 +5,4 @@ echo "$BASEDIR"
 
 export $(cat $BASEDIR/.env | grep -v ^# | xargs)
 
-/usr/bin/php $BASEDIR/bin/console aym:websocket:server -vv 2>&1 >> $BASEDIR/websocket.log
+/usr/bin/php $BASEDIR/bin/console aym:websocket:server -vv
