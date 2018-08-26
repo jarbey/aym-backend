@@ -11,6 +11,12 @@ monolog:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
+            channels: ["!websocketserver"]
+        websocketserver:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.websocketserver.log"
+            level: debug
+            channels: ["websocketserver"]
         console:
             type: console
             process_psr_3_messages: false

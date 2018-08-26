@@ -28,3 +28,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Server\WebSocketComponent:
+        arguments:
+            $logger: '@logger'
+        tags:
+            - { name: monolog.logger, channel: websocketserver }

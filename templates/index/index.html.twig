@@ -38,7 +38,7 @@
 
             {% for meeting in meetings %}
             <div class="row">
-                <div class="col">{{ meeting.id }} : <a href="//meeting.aym.arbey.fr/?mid={{ meeting.id }}&type=trainer">{{ meeting.title }} (TRAINER)</a> - = - <a href="//meeting.aym.arbey.fr/?mid={{ meeting.id }}&type=learner">{{ meeting.title }} (LEARNER)</a></div>
+                <div class="col">{{ meeting.id }} : <a href="//aym.arbey.fr/meeting?mid={{ meeting.id }}&type=trainer">{{ meeting.title }} (TRAINER)</a> - = - <a href="//aym.arbey.fr/meeting?mid={{ meeting.id }}&type=learner">{{ meeting.title }} (LEARNER)</a></div>
             </div>
             {% endfor %}
         </div>

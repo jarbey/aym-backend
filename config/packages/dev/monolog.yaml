@@ -4,7 +4,7 @@ monolog:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
-            channels: ["!event"]
+            channels: ["!event", "!websocketserver"]
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:
@@ -13,6 +13,11 @@ monolog:
         #chromephp:
         #    type: chromephp
         #    level: info
+        websocketserver:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.websocketserver.log"
+            level: debug
+            channels: ["websocketserver"]
         console:
             type: console
             process_psr_3_messages: false
