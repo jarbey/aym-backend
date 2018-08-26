@@ -33,4 +33,11 @@ class IndexController extends AbstractController
             'meetings' => $meetings
         ]);
     }
+	/**
+	 * @Route("/meeting", name="meeting")
+	 */
+	public function meeting() {
+		return $this->render('index/meeting.html.twig', [
+		]);
+	}
 }
