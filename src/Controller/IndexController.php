@@ -45,6 +45,8 @@ class IndexController extends AbstractController
 	 */
 	public function meeting() {
 		return $this->render('index/meeting.html.twig', [
+			'css' => scandir('/public/static/css/')[2],
+			'js' => scandir('/public/static/js/')[2]
 		]);
 	}
 }
